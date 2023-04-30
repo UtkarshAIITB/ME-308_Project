@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T-Shirts</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+</head>
+
+<body style="background-image: url('./static/bg.jpg'); background-size: cover; background-repeat: no-repeat; width: 100%; height: 100%; padding: 0 -20px 0 0;">
+
+
+
+    <nav class="navbar bg-dark navbar-expand-lg py-3" data-bs-theme="dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"><h1>Part Period Balancing</h1></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#" >Home</a>
+              </li>
+              {% comment %} <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li> {% endcomment %}
+              {% comment %} <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Dropdown
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li> {% endcomment %}
+              {% comment %} <li class="nav-item">
+                <a class="nav-link disabled">Disabled</a>
+              </li> {% endcomment %}
+            </ul>
+            {% comment %} <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form> {% endcomment %}
+          </div>
+        </div>
+      </nav>
+
+
+
+
+
+
+
+
+
+
+    <div>
+        <form action="/" method="POST">
+            {% csrf_token %}
+            <div>
+                <h1 class="mx-3 my-3" style="color: #FFFDD0;">Demand</h1>
+                
+                <div class="input-group row">
+                {% for month in months %}
+                <div class="col-3">
+                <input class="form-control mb-3 mx-3" type="text" name="demand-{{month}}" id="demand-{{month}}" placeholder="{{month}}">
+                </div>
+                {% endfor %}
+                </div>
+
+            </div>
+            <div>
+                <h1 class="mx-3" style="color: #FFFDD0;">Setup Cost</h1>
+                <div class="input-group row">
+                {% for month in months %}
+                <div class="col-3">
+                <input class="form-control mb-3 mx-3" type="text" name="setup-cost-{{month}}" id="setup-cost-{{month}}" placeholder="{{month}}">
+                </div>
+                {% endfor %}
+                </div>
+            </div>
+            <div class = "col-3">
+                <h1 class="mx-3" style="color: #FFFDD0;">Holding Cost</h1>
+                <input class="form-control mb-3 mx-3" type="text" name="holding-cost" id="holding-cost">
+            </div>
+            <div class = "row">
+                <h1 class="mx-3" style="color: #FFFDD0;">Threshold Quantities</h1>
+                <div class="col-3">
+                <input class="form-control mb-3 mx-3" type="text" name="q1" id="q1" placeholder="q1">
+                </div>
+                <div class="col-3">
+                    <input class="form-control mb-3 mx-3" type="text" name="q2" id="q2" placeholder="q2">
+                </div>
+                <div class="col-3">
+                    <input class="form-control mb-3 mx-3" type="text" name="q3" id="q3" placeholder="q3">
+                </div>    
+            </div>
+            <div class = "row">
+                <h1 class="mx-3" style="color: #FFFDD0;">Corresponding Discounts</h1>
+                <h6 class="mx-3" style="color: whitesmoke">Please enter discounts in decimals (0-1)</h6>
+                <div class="col-3">
+                    <input class="form-control mb-3 mx-3" type="text" name="d1" id="d1" placeholder="d1">
+                </div>
+                <div class="col-3">
+                    <input class="form-control mb-3 mx-3" type="text" name="d2" id="d2" placeholder="d2">
+                </div>
+                <div class="col-3">
+                    <input class="form-control mb-3 mx-3" type="text" name="d3" id="d3" placeholder="d3">
+                </div>
+            </div>
+            <div class="w-100 text-center">
+                <button class="btn btn-primary" type="submit" value="Submit">Submit</button>
+            </div>
+        </form>
+        <div>
+            <!-- <h1 class="mx-3" style="color: #FFFDD0;">Output</h1> -->
+            <div class = "mx-3">
+              <br><br>
+                <h2 class="my-2" style="color: #FFFDD0;">Ordering Batches</h2>
+                <h6 class="my-2" style="color: whitesmoke">The Most Optimised Way to Place Orders for Next 48 Weeks!</h6>
+
+                {% for val in lots %}
+                {% if forloop.last %}
+                <span><font color="yellow">{{val}}</font></span>
+                {% else %}
+                <span><font color="yellow">{{val}},</font></span>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <br>
+            <div class= "mx-3">
+                <h2 class="my-2" style="color: #FFFDD0;">Segmented Weeks</h2>
+                <h6 class="my-2" style="color: whitesmoke">Number of weeks that are clubbed together as part periods</h6>
+                {% for val in disect %}
+                {% if forloop.last %}
+                <span><font color="yellow">{{val}}</font></span>
+                {% else %}
+                <span><font color="yellow">{{val}},</font></span>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <br>
+            <div class="mx-3">
+                <h2 class="my-2" style="color: #FFFDD0;">Ordering Quantity</h2>
+                <h6 class="my-2" style="color: whitesmoke">Quantity that should be ordered for the segmented weeks</h6>
+                {% for val in orders %}
+                {% if forloop.last %}
+                <span><font color="yellow">{{val}}</font></span>
+                {% else %}
+                <span><font color="yellow">{{val}},</font></span>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <br>
+            <div class="mx-3">
+              <h2 class="my-2" style="color: #FFFDD0;">Total Cost</h2>
+              <span><font color="yellow">{{total_cost}}</font></span>
+            </div>
+        </div>
+
+    </div>
+    <br><br>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <!-- Footer -->
+<footer class="page-footer font-small bg-dark pt-4">
+
+  <!-- Footer Links -->
+  <div class="container-fluid text-center">
+
+    <!-- Grid row -->
+    <div class="row" style="color: #FFFDD0;">
+
+      <!-- Grid column -->
+      <div class="container-fluid text-center">
+
+        <!-- Content -->
+        <h5 class="text-uppercase"><u>ME 308 Project</u></h5>
+        <p>Authors: Utkarsh Agiwal, Eknoor Singh, Aryant Balot, Praharsh Shah</p>
+
+      </div>
+      <!-- Grid column -->
+
+      <!-- <hr class="clearfix w-100 d-md-none pb-3"> -->
+
+
+    </div>
+    <!-- Grid row -->
+
+  </div>
+  <!-- Footer Links -->
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-2" style="color: #FFFDD0;">© 2023 Copyright
+  </div>
+  <!-- Copyright -->
+
+</footer>
+</body>
+
+</html>
